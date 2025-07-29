@@ -49,7 +49,14 @@ Layer	Technology / Tools	Description
 🖼️ File Upload	Flask-Uploads, FileSystem	Used to handle parking space image uploads
 🗺️ Map Embed	Google Maps Embed API	Display parking locations visually
 🌐 Deployment	Uvicorn / Gunicorn, Docker-ready	Production-ready deployment stack
+🌓 Theming System – Dark/Light Toggle
+🎨 A fully responsive dark and light theme toggle is available throughout the site
 
+🌗 Smooth CSS transitions for switching
+
+💡 Toggle saves your preference (via JS/localStorage)
+
+🌍 Consistent look across pages, forms, modals, tables
 🚀 Getting Started
 🔧 Prerequisites
 Make sure you have the following installed:
