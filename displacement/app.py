@@ -100,10 +100,11 @@ def rental():
 @app.route('/user/my_reservations')
 def my_reservations():
     user_id = session['user_id']
-    reservations = ParkingSpace.query.filter_by(owner_id=user_id).all()
-    spaces = [(r.space, r) for r in reservations]  # assuming relationship defined
+    spaces = ParkingSpace.query.filter_by(owner_id=user_id).all()
     return render_template('user/spaces.html', spaces=spaces)
-
+@app.route('/user/service')
+def service():
+    return render_template('user/parking_services_page.html')
 @app.route('/logout')
 def logout():
     session.clear()

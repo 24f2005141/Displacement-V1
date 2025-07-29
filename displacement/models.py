@@ -31,7 +31,7 @@ class ParkingSpace(db.Model):
     length = db.Column(db.Float, nullable=False)
     width = db.Column(db.Float, nullable=False)
     price = db.Column(db.Float, nullable=False)
-    
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
     # Relationships
     reservations = db.relationship('Reservations', backref='parking_space', lazy=True)
 

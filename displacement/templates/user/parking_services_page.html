@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Displacement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .service-title {
+            color: #2d3748;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            color: #718096;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .contact-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 20px;
+            margin-right: 12px;
+            color: #667eea;
+        }
+
+        .contact-text {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .coming-soon {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .coming-soon h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .coming-soon p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .feature-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                padding: 20px;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🅿️ Displacement Services</h1>
+            <p>Premium services available at your parking location</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚗</div>
+                <h3 class="service-title">Vehicle Washing</h3>
+                <p class="service-description">Professional car wash and detailing services available on-site. Interior and exterior cleaning with eco-friendly products.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43210</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">carwash@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3 class="service-title">Vehicle Repair</h3>
+                <p class="service-description">Quick repairs and maintenance services. From tire changes to minor mechanical fixes, we've got you covered.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43211</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">repair@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">⛽</div>
+                <h3 class="service-title">Fuel Delivery</h3>
+                <p class="service-description">On-demand fuel delivery service. Get your tank filled while your vehicle is parked safely in our premises.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43212</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">fuel@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔋</div>
+                <h3 class="service-title">EV Charging</h3>
+                <p class="service-description">Electric vehicle charging stations with fast and standard charging options. Environmentally friendly and convenient.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43213</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">evcharge@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3 class="service-title">Vehicle Insurance</h3>
+                <p class="service-description">Comprehensive vehicle insurance consultation and claim assistance. Protect your investment with our trusted partners.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43214</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">insurance@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3 class="service-title">Valet Service</h3>
+                <p class="service-description">Professional valet parking service. Let our trained staff park and retrieve your vehicle safely and efficiently.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span class="contact-text">+91 98765 43215</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span class="contact-text">valet@displacement.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="coming-soon pulse">
+            <h2>🚀 Coming Soon</h2>
+            <p>We're constantly expanding our services to better serve you!</p>
+            <div class="feature-tags">
+                <span class="feature-tag">Service Ratings</span>
+                <span class="feature-tag">Online Booking</span>
+                <span class="feature-tag">Price Comparison</span>
+                <span class="feature-tag">Service History</span>
+                <span class="feature-tag">Real-time Tracking</span>
+                <span class="feature-tag">Payment Integration</span>
+                <span class="feature-tag">Service Reminders</span>
+                <span class="feature-tag">Customer Reviews</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click-to-call functionality
+            const phoneNumbers = document.querySelectorAll('.contact-item');
+            phoneNumbers.forEach(item => {
+                if (item.textContent.includes('+91')) {
+                    item.style.cursor = 'pointer';
+                    item.addEventListener('click', function() {
+                        const phone = this.querySelector('.contact-text').textContent;
+                        window.location.href = `tel:${phone}`;
+                    });
+                }
+                if (item.textContent.includes('@')) {
+                    item.style.cursor = 'pointer';
+                    item.addEventListener('click', function() {
+                        const email = this.querySelector('.contact-text').textContent;
+                        window.location.href = `mailto:${email}`;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
