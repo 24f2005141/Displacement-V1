@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Displacement - Turn Your Driveway Into Income</title>
+    <style>
+        /* Base styles with better mobile foundations */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Improved touch targets for mobile */
+        button, .btn-primary, .btn-secondary, .auth-btn, .cta-button {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo::before {
+            content: "🅿️";
+            font-size: 2rem;
+        }
+        
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1rem;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .auth-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .auth-btn.primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            border: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .auth-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        [data-theme="dark"] .modal-content {
+            background: #1e2328;
+            color: #e8eaed;
+        }
+        
+        .close-btn {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            color: #ff6b6b;
+        }
+        
+        [data-theme="dark"] .close-btn {
+            color: #b3b6ba;
+        }
+        
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+        
+        [data-theme="dark"] .modal h2 {
+            color: #e8eaed;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        [data-theme="dark"] .form-group label {
+            color: #b3b6ba;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+        
+        [data-theme="dark"] .form-group input {
+            background: #2a2f36;
+            border: 2px solid #3a3f46;
+            color: #e8eaed;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+        
+        [data-theme="dark"] .form-footer {
+            color: #b3b6ba;
+        }
+        
+        .form-footer button {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .user-type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-type-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .user-type-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        [data-theme="dark"] .user-type-btn {
+            background: #2a2f36;
+            border: 2px solid #3a3f46;
+            color: #e8eaed;
+        }
+        
+        [data-theme="dark"] .user-type-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="30" r="1" fill="white" opacity="0.1"/><circle cx="70" cy="70" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: linear-gradient(45deg, #f8f9ff, #ffffff);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: scale(1.05);
+        }
+        
+        .step-number {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: #ff6b6b;
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Dark Theme Styles */
+        [data-theme="dark"] {
+            background-color: #0f1419;
+            color: #e8eaed;
+        }
+        
+        [data-theme="dark"] header {
+            background: linear-gradient(135deg, #1a1f36 0%, #2d1b3d 100%);
+        }
+        
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, #1a1f36 0%, #2d1b3d 100%);
+        }
+        
+        [data-theme="dark"] .features {
+            background: linear-gradient(45deg, #0f1419, #1a1f36);
+        }
+        
+        [data-theme="dark"] .feature-card {
+            background: #1e2328;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e8eaed;
+        }
+        
+        [data-theme="dark"] .feature-card h3 {
+            color: #e8eaed;
+        }
+        
+        [data-theme="dark"] .feature-card p {
+            color: #b3b6ba;
+        }
+        
+        [data-theme="dark"] .section-title {
+            color: #e8eaed;
+        }
+        
+        [data-theme="dark"] .how-it-works {
+            background: linear-gradient(135deg, #1a1f36 0%, #2d1b3d 100%);
+        }
+        
+        [data-theme="dark"] footer {
+            background: #0a0d11;
+        }
+        
+        [data-theme="dark"] .footer-section a {
+            color: #b3b6ba;
+        }
+        
+        [data-theme="dark"] .footer-section a:hover {
+            color: #ff6b6b;
+        }
+        
+        /* Light Theme (default) */
+        [data-theme="light"] {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Floating elements */
+        .floating-cars {
+            position: absolute;
+            top: 20%;
+            right: -10%;
+            font-size: 4rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+            animation-delay: 0s;
+        }
+        
+        .floating-cars:nth-child(2) {
+            top: 60%;
+            left: -10%;
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Displacement</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <button class="auth-btn" id="signInBtn"></button>
+                <button class="auth-btn primary" id="signUpBtn"></button>
+                <a href="/signin" class="auth-btn">Sign In</a>
+                <a href="/signup" class="auth-btn primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="floating-cars">🚗</div>
+        <div class="floating-cars">🅿️</div>
+        <div class="container hero-content">
+            <h1>Turn Your Driveway Into Income</h1>
+            <p>List your parking space and earn money while helping drivers find convenient, affordable parking in your neighborhood.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" id="listSpaceBtn">List Your Space</button>
+                <button class="btn-secondary" id="findParkingBtn">Find Parking</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Displacement?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">💰</span>
+                    <h3>Earn Extra Income</h3>
+                    <p>Transform your unused driveway, garage, or parking spot into a steady source of passive income. Earn up to $200+ per month.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📱</span>
+                    <h3>Easy Management</h3>
+                    <p>Simple mobile app to manage bookings, set your rates, and communicate with renters. Everything at your fingertips.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Secure & Insured</h3>
+                    <p>All transactions are protected with our insurance coverage and verified user system. Park with peace of mind.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Smart Matching</h3>
+                    <p>Our algorithm connects drivers with the perfect parking spots based on location, price, and availability.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Instant Booking</h3>
+                    <p>Real-time availability and instant booking confirmation. No waiting, no hassle, just park and go.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌟</span>
+                    <h3>Community Driven</h3>
+                    <p>Join thousands of homeowners and drivers building a better parking experience with Displacement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>List Your Space</h3>
+                    <p>Upload photos of your parking space, set your hourly/daily rates, and define availability hours.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Bookings</h3>
+                    <p>Drivers discover your space through our app and book instantly. You'll receive notifications for each booking.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Earn Money</h3>
+                    <p>Automatic payments are processed after each rental. Track your earnings and withdraw anytime.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Build Reputation</h3>
+                    <p>Great hosts earn badges and higher visibility, leading to more bookings and increased earnings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Earning?</h2>
+            <p>Join thousands of homeowners already making money with their parking spaces.</p>
+            <button class="btn-secondary" id="ctaStartBtn" style="background: white; color: #ff6b6b; font-weight: 600;">Start Listing Today</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>For Hosts</h4>
+                    <a href="#">List Your Space</a>
+                    <a href="#">Host Resources</a>
+                    <a href="#">Pricing Guide</a>
+                    <a href="#">Insurance Info</a>
+                </div>
+                <div class="footer-section">
+                    <h4>For Drivers</h4>
+                    <a href="#">Find Parking</a>
+                    <a href="#">How It Works</a>
+                    <a href="#">Safety</a>
+                    <a href="#">Mobile App</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Community Guidelines</a>
+                </div>
+            </div>
+            <p>&copy; 2025 Displacement. All rights reserved. Turn your space into income.</p>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeSignIn">&times;</button>
+            <h2>Welcome Back</h2>
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                <button type="submit" class="form-submit">Sign In</button>
+            </form>
+            <div class="form-footer">
+                Don't have an account? <button id="switchToSignUp">Sign up here</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeSignUp">&times;</button>
+            <h2>Join Displacement</h2>
+            <form id="signUpForm">
+                <div class="user-type-selector">
+                    <button type="button" class="user-type-btn active" data-type="renter">
+                        🚗 Find Parking
+                    </button>
+                    <button type="button" class="user-type-btn" data-type="host">
+                        🏠 List Space
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPhone">Phone Number</label>
+                    <input type="tel" id="signUpPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="form-submit">Create Account</button>
+            </form>
+            <div class="form-footer">
+                Already have an account? <button id="switchToSignIn">Sign in here</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication Modal functionality
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const closeSignIn = document.getElementById('closeSignIn');
+        const closeSignUp = document.getElementById('closeSignUp');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+        
+        // Open modals
+        signInBtn.addEventListener('click', () => {
+            signInModal.classList.add('active');
+        });
+        
+        signUpBtn.addEventListener('click', () => {
+            signUpModal.classList.add('active');
+        });
+        
+        // Close modals
+        closeSignIn.addEventListener('click', () => {
+            signInModal.classList.remove('active');
+        });
+        
+        closeSignUp.addEventListener('click', () => {
+            signUpModal.classList.remove('active');
+        });
+        
+        // Switch between modals
+        switchToSignUp.addEventListener('click', () => {
+            signInModal.classList.remove('active');
+            signUpModal.classList.add('active');
+        });
+        
+        switchToSignIn.addEventListener('click', () => {
+            signUpModal.classList.remove('active');
+            signInModal.classList.add('active');
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === signInModal) {
+                signInModal.classList.remove('active');
+            }
+            if (e.target === signUpModal) {
+                signUpModal.classList.remove('active');
+            }
+        });
+        
+        // User type selector
+        const userTypeBtns = document.querySelectorAll('.user-type-btn');
+        userTypeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                userTypeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+        
+        // Responsive enhancements and mobile optimizations
+        
+        // Improved mobile navigation handling
+        function handleMobileNavigation() {
+            const nav = document.querySelector('nav');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                nav.style.flexWrap = 'wrap';
+                nav.style.justifyContent = 'space-between';
+            } else {
+                nav.style.flexWrap = 'nowrap';
+                nav.style.justifyContent = 'space-between';
+            }
+        }
+        
+        // Handle window resize for responsive behavior
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                handleMobileNavigation();
+                adjustModalForViewport();
+            }, 250);
+        });
+        
+        // Adjust modal positioning for different screen sizes
+        function adjustModalForViewport() {
+            const modals = document.querySelectorAll('.modal');
+            const isSmallScreen = window.innerHeight < 600;
+            
+            modals.forEach(modal => {
+                if (isSmallScreen) {
+                    modal.style.alignItems = 'flex-start';
+                    modal.style.paddingTop = '1rem';
+                } else {
+                    modal.style.alignItems = 'center';
+                    modal.style.paddingTop = '0';
+                }
+            });
+        }
+        
+        // Prevent zoom on input focus for iOS
+        function preventMobileZoom() {
+            const inputs = document.querySelectorAll('input[type="email"], input[type="password"], input[type="text"], input[type="tel"]');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    if (window.innerWidth < 768) {
+                        this.style.fontSize = '16px'; // Prevents zoom on iOS
+                    }
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.fontSize = ''; // Reset to CSS value
+                });
+            });
+        }
+        
+        // Enhanced touch handling for better mobile experience
+        function enhanceTouchInteractions() {
+            const touchElements = document.querySelectorAll('.feature-card, .step, .btn-primary, .btn-secondary, .auth-btn');
+            
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }, { passive: true });
+            });
+        }
+        
+        // Smooth scrolling with offset for fixed header
+        function enhanceSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Initialize all responsive features
+        function initializeResponsiveFeatures() {
+            handleMobileNavigation();
+            adjustModalForViewport();
+            preventMobileZoom();
+            enhanceTouchInteractions();
+            enhanceSmoothScrolling();
+        }
+        
+        // Initialize on DOM load
+        document.addEventListener('DOMContentLoaded', initializeResponsiveFeatures);
+        
+        // Simple frontend-only authentication (no backend)
+        document.getElementById('signInForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            
+            // Simple demo authentication
+            if (email && password) {
+                alert(`Welcome back! Signed in with: ${email}`);
+                signInModal.classList.remove('active');
+                
+                // Store user info in memory
+                window.currentUser = { email: email, name: email.split('@')[0] };
+                updateUIForLoggedInUser(window.currentUser);
+            } else {
+                alert('Please enter both email and password');
+            }
+        });
+        
+        document.getElementById('signUpForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const phone = document.getElementById('signUpPhone').value;
+            const password = document.getElementById('signUpPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const userType = document.querySelector('.user-type-btn.active').dataset.type;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (name && email && phone && password) {
+                alert(`Account created successfully! Welcome ${name}!\nUser type: ${userType}\n\nYou can now sign in with your credentials.`);
+                signUpModal.classList.remove('active');
+                // Clear form
+                document.getElementById('signUpForm').reset();
+            } else {
+                alert('Please fill in all required fields');
+            }
+        });
+        
+        // Update UI for logged in user
+        function updateUIForLoggedInUser(user) {
+            // Hide auth buttons, show user info
+            const authBtns = document.querySelector('#signInBtn').parentElement;
+            authBtns.innerHTML = `
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <span style="color: white; margin-left: 1rem;">Welcome, ${user.name}!</span>
+                <button class="auth-btn" onclick="logout()">Logout</button>
+            `;
+            
+            // Re-initialize theme toggle
+            initializeThemeToggle();
+        }
+        
+        // Logout function
+        function logout() {
+            window.currentUser = null;
+            location.reload(); // Simple way to reset UI
+        }
+        
+        // Initialize theme toggle (separated for reuse)
+        function initializeThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (!themeToggle) return;
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                body.setAttribute('data-theme', newTheme);
+                updateThemeIcon(newTheme);
+                
+                try {
+                    if (typeof Storage !== "undefined") {
+                        localStorage.setItem('theme', newTheme);
+                    }
+                } catch (e) {
+                    // localStorage not available, continue without saving
+                }
+            });
+        }
+        
+        // CTA buttons that trigger sign up
+        document.getElementById('listSpaceBtn').addEventListener('click', () => {
+            signUpModal.classList.add('active');
+            // Select host type
+            userTypeBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-type="host"]').classList.add('active');
+        });
+        
+        document.getElementById('findParkingBtn').addEventListener('click', () => {
+            signUpModal.classList.add('active');
+            // Select renter type
+            userTypeBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-type="renter"]').classList.add('active');
+        });
+        
+        document.getElementById('ctaStartBtn').addEventListener('click', () => {
+            signUpModal.classList.add('active');
+            // Select host type for listing
+            userTypeBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-type="host"]').classList.add('active');
+        });
+
+        // Theme toggle functionality
+        const body = document.body;
+        
+        // Check for saved theme preference or default to 'light'
+        const savedTheme = (() => {
+            try {
+                if (typeof Storage !== "undefined") {
+                    return localStorage.getItem('theme') || 'light';
+                }
+                return 'light';
+            } catch (e) {
+                return 'light';
+            }
+        })();
+        
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        // Initialize theme toggle on page load
+        initializeThemeToggle();
+        
+        function updateThemeIcon(theme) {
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(102, 126, 234, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Animate feature cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .step').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add click handlers for CTA buttons
+        document.querySelectorAll('.btn-primary, .btn-secondary, .cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    // Add your routing logic here
+                    console.log('Button clicked:', this.textContent);
+                    
+                    // Example: Show a modal or redirect
+                    if (this.textContent.includes('List')) {
+                        alert('Redirecting to host registration...');
+                    } else if (this.textContent.includes('Find')) {
+                        alert('Redirecting to parking search...');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

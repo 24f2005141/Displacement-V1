@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reservations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-4">
+        <h2 class="mb-4">My Reservations</h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered" id="resultTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">OWNER_ID</th>
+                        <th scope="col">Spot ID</th>
+                        <th scope="col">PINCODE</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Release</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s, reservation in spaces %}
+                    <tr>
+                        <td>{{ s.owner_id }}</td>
+                        <td>{{ s.id }}</td>
+                        <td>{{ s.pin_code }}</td>
+                        <td>{{ s.price }}</td>
+                        {% if reservation.is_active %}
+                        <td><span class="text-success">Active</span></td>
+                        <td><a href="{{ url_for('release_spot', reservation_id=reservation.id) }}" class="btn btn-danger">Release</a></td>
+                        {% else %}
+                        <td><span class="text-danger">Released</span></td>
+                        <td>NA</td>
+                        {% endif %}
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No reservations found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

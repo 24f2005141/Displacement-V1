@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Displacement - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* ========== BASE RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        /* ========== THEME VARIABLES ========== */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --accent-gradient: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            --btn-color: white;
+            --btn-radius: 30px;
+            --box-radius: 20px;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --modal-bg: white;
+            --input-bg: white;
+            --input-border: #e1e5e9;
+            --link-hover: #ff6b6b;
+        }
+
+        /* ========== DARK THEME ========== */
+        [data-theme='dark'] {
+            --bg-color: #0f1419;
+            --text-color: #e8eaed;
+            --card-bg: #1e2328;
+            --card-shadow: rgba(255, 255, 255, 0.05);
+            --modal-bg: #1e2328;
+            --input-bg: #2a2f36;
+            --input-border: #3a3f46;
+        }
+
+        /* ========== BUTTON STYLES ========== */
+        button,
+        .btn-primary,
+        .btn-secondary {
+            cursor: pointer;
+            min-height: 44px;
+            border: none;
+            font-size: 1rem;
+            border-radius: var(--btn-radius);
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: var(--btn-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--btn-color);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--primary-gradient);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(180deg);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: var(--btn-radius);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ========== MAIN DASHBOARD ========== */
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* ========== DASHBOARD CARDS ========== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: var(--box-radius);
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px var(--card-shadow);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--input-border);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px var(--card-shadow);
+        }
+
+        .dashboard-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .card-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .card-action {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--btn-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .card-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* ========== SERVICES SUBMENU ========== */
+        .services-submenu {
+            display: none;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        .services-submenu.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(10px);
+        }
+
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        }
+
+        .service-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .service-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-card {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 2rem 1rem;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .dashboard-card {
+                padding: 2rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-parking"></i> Displacement
+            </a>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Welcome, {{ user.username }}</span>
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span href="#">Your Rentals</span>
+                </div><div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span  href="#">Your Bookings</span>
+                </div>
+                <li class="nav-item"><i class="fas fa-user-circle"></i><a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a></li>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Your Dashboard</h1>
+            <p class="welcome-subtitle">
+                Manage your parking spaces, find the perfect spot, or get your vehicle serviced - all in one place.
+            </p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Rent Your Parking Slot -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h2 class="card-title">Rent Your Parking Slot</h2>
+                <p class="card-description">
+                    Transform your unused parking space into a revenue stream. List your spot and start earning money from day one with our easy setup process.
+                </p>
+                <button class="card-action" onclick="rentParkingSlot()">
+                    <i class="fas fa-plus-circle"></i> List Your Space
+                </button>
+            </div>
+
+            <!-- Book Parking Slot -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-search-location"></i>
+                </div>
+                <h2 class="card-title">Book Parking Slot</h2>
+                <p class="card-description">
+                    Find and reserve the perfect parking spot near your destination. Browse available spaces, compare prices, and book instantly with our smart search.
+                </p>
+                <button class="card-action" onclick="bookParkingSlot()">
+                    <i class="fas fa-calendar-check"></i> Find & Book
+                </button>
+            </div>
+
+            <!-- Services -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h2 class="card-title">Vehicle Services</h2>
+                <p class="card-description">
+                    Keep your vehicle in perfect condition with our premium services. From car wash to repairs, we've got you covered with trusted professionals.
+                </p>
+                <button class="card-action" onclick="toggleServices()">
+                    <i class="fas fa-wrench"></i> View Services
+                </button>
+                
+                <div class="services-submenu" id="servicesSubmenu">
+                    <div class="service-item" onclick="selectService('carwash')">
+                        <div class="service-icon">
+                            <i class="fas fa-shower"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Car Wash</h4>
+                            <p>Professional cleaning and detailing services</p>
+                        </div>
+                    </div>
+                    <div class="service-item" onclick="selectService('repair')">
+                        <div class="service-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="service-info">
+                            <h4>Vehicle Repair</h4>
+                            <p>Expert mechanics for all repair needs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Dashboard Functions
+        function rentParkingSlot() {
+            alert('Redirecting to Rent Parking Slot page...');
+            // Add navigation logic here
+            window.location.href = "{{ url_for('rental') }}";
+            console.log('Navigate to rent parking slot page');
+        }
+
+        function bookParkingSlot() {
+            alert('Redirecting to Book Parking Slot page...');
+            // Add navigation logic here
+            console.log('Navigate to book parking slot page');
+        }
+
+        function toggleServices() {
+            const submenu = document.getElementById('servicesSubmenu');
+            submenu.classList.toggle('active');
+        }
+
+        function selectService(serviceType) {
+            alert(`Redirecting to ${serviceType === 'carwash' ? 'Car Wash' : 'Vehicle Repair'} services...`);
+            // Add navigation logic here
+            console.log(`Navigate to ${serviceType} services page`);
+        }
+
+        // Add smooth scrolling and entrance animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.dashboard-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

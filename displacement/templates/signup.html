@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== BASE RESET ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ========== THEME VARIABLES ========== */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --accent-gradient: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            --btn-color: white;
+            --btn-radius: 30px;
+            --box-radius: 20px;
+            --bg-color: #2c3e50;
+            --text-color: #ecf0f1;
+            --card-bg: #34495e;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --modal-bg: #34495e;
+            --input-bg: #4a5f7a;
+            --input-border: #5d6d7e;
+            --link-hover: #ff6b6b;
+            --input-text: #ecf0f1;
+            --placeholder-color: #95a5a6;
+        }
+
+        /* ========== BUTTON STYLES ========== */
+        button,
+        .btn-primary,
+        .btn-secondary {
+            cursor: pointer;
+            min-height: 44px;
+            border: none;
+            font-size: 1rem;
+            border-radius: var(--btn-radius);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: var(--btn-color);
+            padding: 1rem 2rem;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ========== FORM CONTAINER ========== */
+        .signup-container {
+            background: var(--card-bg);
+            padding: 3rem 2.5rem;
+            border-radius: var(--box-radius);
+            box-shadow: 0 20px 50px var(--card-shadow);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .signup-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: var(--box-radius) var(--box-radius) 0 0;
+        }
+
+        /* ========== FORM STYLES ========== */
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .form-input {
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            color: var(--input-text);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: var(--placeholder-color);
+            opacity: 0.7;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        /* ========== SIGN IN LINK ========== */
+        .signin-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--placeholder-color);
+        }
+
+        .signin-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .signin-link a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .signup-container {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 480px) {
+            .signup-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .form-input {
+                padding: 0.875rem 1rem;
+            }
+        }
+
+        /* ========== BACKGROUND GRADIENT ========== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <form class="signup-form" method="POST" action="/signup">
+            <div class="form-group">
+                <label class="form-label" for="fullName">Full Name</label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    class="form-input" 
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="Enter your email address"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    class="form-input" 
+                    placeholder="Enter your phone number"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Create a password"
+                    required
+                    minlength="6"
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    class="form-input" 
+                    placeholder="Confirm your password"
+                    required
+                    minlength="6"
+                >
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Create Account
+            </button>
+        </form>
+
+        <div class="signin-link">
+            Already have an account? <a href="#" onclick="showSignInMessage()">Sign in here</a>
+        </div>
+    </div>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            // Password validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+            
+            // Show success message
+            const submitBtn = form.querySelector('.btn-primary');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Creating Account...';
+            submitBtn.style.background = 'linear-gradient(45deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                submitBtn.textContent = 'Account Created! ✓';
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = 'var(--accent-gradient)';
+                    form.reset();
+                }, 2000);
+            }, 1500);
+        }
+        
+        function showSignInMessage() {
+            alert('Sign in functionality would redirect to the login page.');
+        }
+
+        // Add input validation feedback
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.validity.valid) {
+                    this.style.borderColor = '#27ae60';
+                } else if (this.value.length > 0) {
+                    this.style.borderColor = '#e74c3c';
+                } else {
+                    this.style.borderColor = 'transparent';
+                }
+            });
+        });
+
+        // Real-time password matching
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        function checkPasswordMatch() {
+            if (confirmPasswordInput.value.length > 0) {
+                if (passwordInput.value === confirmPasswordInput.value) {
+                    confirmPasswordInput.style.borderColor = '#27ae60';
+                } else {
+                    confirmPasswordInput.style.borderColor = '#e74c3c';
+                }
+            }
+        }
+
+        passwordInput.addEventListener('input', checkPasswordMatch);
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+    </script>
+</body>
+</html>
